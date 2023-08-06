@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+  creationTimestamp: null
+  name: aaa-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: aaa.cluster.koalaops.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: aaa-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - aaa.cluster.koalaops.com
+    secretName: aaa-tls-cert
+status:
+  loadBalancer: {}
